@@ -6,7 +6,9 @@ import {
   Column,
   Flex,
   Heading,
+  Row,
   SmartLink,
+  Tag,
   Text,
 } from "@once-ui-system/core";
 
@@ -14,6 +16,8 @@ interface ProjectCardProps {
   href: string;
   priority?: boolean;
   images: string[];
+  imageAlts?: string[];
+  technologies?: string[];
   title: string;
   /** Whether the project has a case study page to link to. */
   hasContent: boolean;
@@ -25,6 +29,8 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   href,
   images = [],
+  imageAlts = [],
+  technologies = [],
   title,
   hasContent,
   description,
@@ -33,13 +39,21 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   return (
     <Column fillWidth gap="m">
-      <Carousel
-        sizes="(max-width: 960px) 100vw, 960px"
-        items={images.map((image) => ({
-          slide: image,
-          alt: title,
-        }))}
-      />
+      {images.length > 0 ? (
+        <Carousel
+          sizes="(max-width: 960px) 100vw, 960px"
+          items={images.map((image, index) => ({
+            slide: image,
+            alt:
+              imageAlts[index] ||
+              `${title}: ${image
+                .split("/")
+                .pop()
+                ?.replace(/\.[^.]+$/, "")
+                .replace(/[-_]/g, " ")}`,
+          }))}
+        />
+      ) : null}
       <Flex
         s={{ direction: "column" }}
         fillWidth
@@ -63,6 +77,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 {description}
               </Text>
             )}
+            {technologies.length > 0 && (
+              <Row gap="8" wrap>
+                {technologies.map((technology) => (
+                  <Tag key={technology} size="s">
+                    {technology}
+                  </Tag>
+                ))}
+              </Row>
+            )}
             <Flex gap="24" wrap>
               {hasContent && (
                 <SmartLink
@@ -78,8 +101,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                   suffixIcon="arrowUpRightFromSquare"
                   style={{ margin: "0", width: "fit-content" }}
                   href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Text variant="body-default-s">View project</Text>
+                  <Text variant="body-default-s">Live Demo</Text>
                 </SmartLink>
               )}
             </Flex>

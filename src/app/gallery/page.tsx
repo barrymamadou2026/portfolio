@@ -1,6 +1,8 @@
 import { Flex, Meta, Schema } from "@once-ui-system/core";
+import { notFound } from "next/navigation";
 import GalleryView from "@/components/gallery/GalleryView";
-import { baseURL, gallery, person } from "@/resources";
+import { baseURL, gallery, person, routes } from "@/resources";
+import { getPublicAssetUrl } from "@/utils/getPublicAssetUrl";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -13,6 +15,10 @@ export async function generateMetadata() {
 }
 
 export default function Gallery() {
+  if (!routes["/gallery"]) notFound();
+  if (gallery.images.length === 0) notFound();
+  const avatarUrl = getPublicAssetUrl(person.avatar, baseURL);
+
   return (
     <Flex maxWidth="l">
       <Schema
@@ -25,7 +31,7 @@ export default function Gallery() {
         author={{
           name: person.name,
           url: `${baseURL}${gallery.path}`,
-          image: `${baseURL}${person.avatar}`,
+          ...(avatarUrl ? { image: avatarUrl } : {}),
         }}
       />
       <GalleryView />

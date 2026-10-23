@@ -3,9 +3,20 @@
 import { usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 
-import { Fade, Flex, Line, Row, ToggleButton } from "@once-ui-system/core";
+import {
+  Button,
+  Column,
+  Dialog,
+  Fade,
+  Flex,
+  Line,
+  Row,
+  Text,
+  ToggleButton,
+  useToast,
+} from "@once-ui-system/core";
 
-import { routes, display, person, about, blog, work, gallery } from "@/resources";
+import { routes, display, person, about, work, gallery } from "@/resources";
 import type { IconName } from "@/resources/icons";
 import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Header.module.scss";
@@ -48,12 +59,36 @@ export default TimeDisplay;
 const navItems: { href: keyof typeof routes; icon: IconName; label: string }[] = [
   { href: "/about", icon: "person", label: about.label },
   { href: "/work", icon: "grid", label: work.label },
-  { href: "/blog", icon: "book", label: blog.label },
   { href: "/gallery", icon: "gallery", label: gallery.label },
 ];
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
+  const [contactOpen, setContactOpen] = useState(false);
+  const { addToast } = useToast();
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(person.email);
+    } catch {
+      const emailInput = document.createElement("textarea");
+      emailInput.value = person.email;
+      emailInput.style.position = "fixed";
+      emailInput.style.opacity = "0";
+      document.body.appendChild(emailInput);
+      emailInput.select();
+      const copied = document.execCommand("copy");
+      emailInput.remove();
+
+      if (!copied) {
+        addToast({ variant: "danger", message: "Unable to copy email address" });
+        return;
+      }
+    }
+
+    setContactOpen(false);
+    addToast({ variant: "success", message: "Email copied" });
+  };
 
   return (
     <>
@@ -128,6 +163,27 @@ export const Header = () => {
                     </Fragment>
                   ),
               )}
+                <Row s={{ hide: true }}>
+                  <ToggleButton
+                    prefixIcon="email"
+                    label="Let's connect"
+                    title="Contact me"
+                    aria-label="Contact Mamadou Barry"
+                    aria-haspopup="dialog"
+                    aria-expanded={contactOpen}
+                    onClick={() => setContactOpen(true)}
+                  />
+                </Row>
+                <Row hide s={{ hide: false }}>
+                  <ToggleButton
+                    prefixIcon="email"
+                    title="Contact me"
+                    aria-label="Contact Mamadou Barry"
+                    aria-haspopup="dialog"
+                    aria-expanded={contactOpen}
+                    onClick={() => setContactOpen(true)}
+                  />
+                </Row>
               {display.themeSwitcher && (
                 <>
                   <Line background="neutral-alpha-medium" vert maxHeight="24" />
@@ -146,11 +202,40 @@ export const Header = () => {
             gap="20"
           >
             <Flex s={{ hide: true }}>
-              {display.time && <TimeDisplay timeZone={person.location} />}
+                {display.time && <TimeDisplay timeZone={person.timeZone} />}
             </Flex>
           </Flex>
         </Flex>
       </Row>
+      <Dialog
+        open={contactOpen}
+        onClose={() => setContactOpen(false)}
+        title="Contact Mamadou Barry"
+        description="Choose how you would like to get in touch."
+        closeOnClickaway
+      >
+        <Column gap="12" fillWidth>
+          <Text variant="body-default-m">{person.email}</Text>
+          <Row gap="8" wrap>
+            <Button
+              href={`mailto:${person.email}`}
+              variant="primary"
+              prefixIcon="email"
+              aria-label="Send email to Mamadou Barry"
+            >
+              Send email
+            </Button>
+            <Button
+              variant="secondary"
+              prefixIcon="openLink"
+              onClick={copyEmail}
+              aria-label="Copy Mamadou Barry email address"
+            >
+              Copy email
+            </Button>
+          </Row>
+        </Column>
+      </Dialog>
     </>
   );
 };

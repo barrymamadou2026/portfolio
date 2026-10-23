@@ -1,50 +1,35 @@
-import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/types";
-import { Line, Row, Text } from "@once-ui-system/core";
+import type { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/types";
 
 const person: Person = {
-  firstName: "Selene",
-  lastName: "Yu",
-  name: `Selene Yu`,
-  role: "Design Engineer",
-  avatar: "/images/avatar.jpg",
-  email: "example@gmail.com",
-  location: "Asia/Jakarta", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["English", "Bahasa"], // optional: Leave the array empty if you don't want to display languages
-  locale: "en", // BCP 47 language tag for the HTML lang attribute, e.g., 'en', 'ja', 'zh-TW'
+  firstName: "Mamadou",
+  lastName: "Barry",
+  name: "Mamadou Barry",
+  role: "Software Developer | Software Engineering, Systems & Cloud",
+  avatar: "/images/profile/mamadou-barry.jpg",
+  email: "mb624064783@gmail.com",
+  location: "Conakry, Guinea",
+  timeZone: "Africa/Conakry",
+  languages: ["Pular (native)", "French (fluent)", "English (intermediate)"],
+  locale: "en",
 };
 
 const newsletter: Newsletter = {
-  display: true,
-  title: <>Subscribe to {person.firstName}'s Newsletter</>,
-  description: <>My weekly newsletter about creativity and engineering</>,
+  display: false,
+  title: <>Mamadou Barry's Newsletter</>,
+  description: <>Updates on software engineering, systems and cloud.</>,
 };
 
 const social: Social = [
-  // Links are automatically displayed.
-  // Import new icons in /once-ui/icons.ts
-  // Set essentials: true for links you want to show on the about page
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/once-ui-system",
+    link: "https://github.com/barrymamadou2026",
     essential: true,
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/company/once-ui/",
-    essential: true,
-  },
-  {
-    name: "Instagram",
-    icon: "instagram",
-    link: "https://www.instagram.com/once_ui/",
-    essential: false,
-  },
-  {
-    name: "Threads",
-    icon: "threads",
-    link: "https://www.threads.com/@once_ui",
+    link: "https://www.linkedin.com/in/mamadou-barry-6769bb2bb",
     essential: true,
   },
   {
@@ -57,31 +42,21 @@ const social: Social = [
 
 const home: Home = {
   path: "/",
-  image: "/images/og/home.jpg",
+  image: "/api/og/generate",
   label: "Home",
-  title: `${person.name}'s Portfolio`,
-  description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Building bridges between design and code</>,
+  title: "Mamadou Barry — Software Developer | Software Engineering, Systems & Cloud",
+  description:
+    "Portfolio of Mamadou Barry, NTIC graduate and Full Stack Developer working with NestJS, Next.js, Spring Boot, PostgreSQL, software engineering, networking and cloud technologies.",
+  headline: <>I build reliable software and explore the systems that make it scale.</>,
   featured: {
     display: true,
-    title: (
-      <Row gap="12" vertical="center">
-        <strong className="ml-4">Once UI</strong>{" "}
-        <Line background="brand-alpha-strong" vert height="20" />
-        <Text marginRight="4" onBackground="brand-medium">
-          Featured work
-        </Text>
-      </Row>
-    ),
-    href: "/work/building-once-ui-a-customizable-design-system",
+    title: "Featured project: Telecom SaaS Platform",
+    href: "/work/telecom-saas-platform-full-stack-development",
   },
   subline: (
     <>
-      I'm {person.firstName}, a {person.role.toLowerCase()} at{" "}
-      <Text as="span" size="xl" weight="strong">
-        ONCE UI
-      </Text>
-      , where I craft intuitive <br /> user experiences. After hours, I build my own projects.
+      Full Stack Developer and NTIC graduate with hands-on experience in backend development, web
+      applications, telecommunications platforms, networking and cloud technologies.
     </>
   ),
 };
@@ -89,8 +64,9 @@ const home: Home = {
 const about: About = {
   path: "/about",
   label: "About",
-  title: `About – ${person.name}`,
-  description: `Meet ${person.name}, ${person.role} from ${person.location}`,
+  title: `About — ${person.name}`,
+  description:
+    "Full Stack Developer and NTIC graduate with practical experience in software development, backend systems, web applications, telecommunications platforms, databases and networking.",
   tableOfContent: {
     display: true,
     subItems: false,
@@ -99,136 +75,150 @@ const about: About = {
     display: true,
   },
   calendar: {
-    display: true,
-    link: "https://cal.com",
+    display: false,
+    link: "",
   },
   intro: {
     display: true,
-    title: "Introduction",
+    title: "Short introduction",
     description: (
       <>
-        {person.firstName} is a {person.location.split("/")[1]?.replace("_", " ")}-based{" "}
-        {person.role.toLowerCase()} with a passion for transforming complex challenges into simple,
-        elegant design solutions. Their work spans digital interfaces, interactive experiences, and
-        the convergence of design and technology.
+        NTIC graduate and Full Stack Developer with hands-on experience in software development,
+        backend systems, web applications, telecommunications platforms, databases and networking.
+        Through projects and professional experience at NG-TECH, I have worked with technologies
+        including NestJS, Next.js, Spring Boot, PostgreSQL, RabbitMQ and modern software development
+        practices. I am particularly interested in software engineering, distributed systems, cloud
+        technologies and the relationship between software and infrastructure. I enjoy building
+        reliable applications, understanding how systems work and continuously improving my
+        technical skills.
       </>
     ),
   },
   work: {
-    display: true, // set to false to hide this section
-    title: "Work Experience",
+    display: true,
+    title: "Experience",
     experiences: [
       {
-        company: "FLY",
-        timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        company: "NG-TECH",
+        timeframe: "July 2026 – Present; internship extended until December 2026",
+        role: "Full Stack Developer Intern | Conakry, Guinea",
         achievements: [
-          <>
-            Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
-            engagement and 30% faster load times.
-          </>,
-          <>
-            Spearheaded the integration of AI tools into design workflows, enabling designers to
-            iterate 50% faster.
-          </>,
+          "Develop backend services with NestJS using a hexagonal architecture.",
+          "Implement asynchronous RabbitMQ workflows for transaction reservation, debit and automated refunds in failure scenarios.",
+          "Develop and maintain unit and end-to-end tests for business scenarios.",
+          "Build client and administration interfaces with Next.js.",
+          "Work on dynamic pricing and delivery workflows subject to operator constraints.",
+          "Manage PostgreSQL data and migrations using Prisma.",
+          "Implement asynchronous CSV reporting workflows and integrate external telecom APIs.",
         ],
-        images: [
-          // optional: leave the array empty if you don't want to display images
-          {
-            src: "/images/projects/project-01/cover-01.jpg",
-            alt: "Once UI Project",
-            width: 16,
-            height: 9,
-          },
-        ],
+        images: [],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "MTN Guinea",
+        timeframe: "December 2025",
+        role: "Professional Immersion — Telecom Infrastructure",
         achievements: [
-          <>
-            Developed a design system that unified the brand across multiple platforms, improving
-            design consistency by 40%.
-          </>,
-          <>
-            Led a cross-functional team to launch a new product line, contributing to a 15% increase
-            in overall company revenue.
-          </>,
+          "Observed 4G/5G telecommunications infrastructure.",
+          "Explored network-security and infrastructure-supervision practices.",
+          "Discussed networking, telecommunications and information-systems roles with technical teams.",
         ],
         images: [],
       },
     ],
   },
   studies: {
-    display: true, // set to false to hide this section
-    title: "Studies",
+    display: true,
+    title: "Education",
     institutions: [
       {
-        name: "University of Jakarta",
-        description: <>Studied software engineering.</>,
+        name: "Bachelor's Degree in New Information and Communication Technologies (NTIC)",
+        description: (
+          <>
+            Université Gamal Abdel Nasser de Conakry (UGANC) | 2023–2026 | Completed
+            <br />
+            Algorithms and programming, object-oriented programming, web development, databases,
+            computer architecture, network administration, software engineering, high-speed and
+            mobile networks, Internet of Things, cloud computing, security and project management.
+          </>
+        ),
       },
       {
-        name: "Build the Future",
-        description: <>Studied online marketing and personal branding.</>,
+        name: "Full Stack Web Development & Project Management",
+        description: <>Orange Digital Center Guinea | 2026</>,
+      },
+      {
+        name: "CCNA Preparation — Cisco Networking",
+        description: (
+          <>
+            In progress: routing, switching, TCP/IP, VLAN, Cisco Packet Tracer and GNS3. This is
+            preparation training, not a CCNA certification.
+          </>
+        ),
       },
     ],
   },
   technical: {
-    display: true, // set to false to hide this section
-    title: "Technical skills",
+    display: true,
+    title: "Technical Skills",
     skills: [
       {
-        title: "Figma",
-        description: <>Able to prototype in Figma with Once UI with unnatural speed.</>,
-        tags: [
-          {
-            name: "Figma",
-            icon: "figma",
-          },
-        ],
-        // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-02.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-          {
-            src: "/images/projects/project-01/cover-03.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
+        title: "Backend",
+        tags: ["Java", "Spring Boot", "NestJS", "REST APIs", "JWT", "RabbitMQ"].map((name) => ({
+          name,
+        })),
       },
       {
-        title: "Next.js",
-        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
+        title: "Frontend",
+        tags: ["Next.js", "React", "JavaScript", "TypeScript", "HTML", "CSS"].map((name) => ({
+          name,
+        })),
+      },
+      {
+        title: "Databases",
+        tags: ["PostgreSQL", "MySQL", "Prisma"].map((name) => ({ name })),
+      },
+      {
+        title: "Software Engineering",
         tags: [
-          {
-            name: "JavaScript",
-            icon: "javascript",
-          },
-          {
-            name: "Next.js",
-            icon: "nextjs",
-          },
-          {
-            name: "Supabase",
-            icon: "supabase",
-          },
-        ],
-        // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
+          "Hexagonal Architecture",
+          "Automated Testing",
+          "E2E Testing",
+          "Regression Testing",
+          "Git",
+          "GitHub",
+        ].map((name) => ({ name })),
+      },
+      {
+        title: "Cloud & DevOps",
+        tags: ["Docker", "Render", "Vercel", "Cloudinary"].map((name) => ({ name })),
+      },
+      {
+        title: "Networking & Systems",
+        tags: [
+          "TCP/IP",
+          "VLAN",
+          "Cisco Packet Tracer",
+          "Routing fundamentals",
+          "Switching fundamentals",
+          "Linux",
+          "Windows",
+        ].map((name) => ({ name })),
+      },
+      {
+        title: "Programming Languages",
+        tags: ["Java", "Python", "C"].map((name) => ({ name })),
+      },
+      {
+        title: "Currently exploring",
+        description: <>Areas of continued learning and professional development.</>,
+        tags: [
+          "Cloud architecture",
+          "Distributed systems",
+          "DevOps",
+          "Linux administration",
+          "Software architecture",
+          "Network security",
+        ].map((name) => ({ name })),
       },
     ],
   },
@@ -237,67 +227,61 @@ const about: About = {
 const blog: Blog = {
   path: "/blog",
   label: "Blog",
-  title: "Writing about design and tech...",
-  description: `Read what ${person.name} has been up to recently`,
-  // Create new blog posts by adding a new .mdx file to app/blog/posts
-  // All posts will be listed on the /blog route
+  title: "Blog",
+  description: `Articles by ${person.name}`,
 };
 
 const work: Work = {
   path: "/work",
-  label: "Work",
-  title: `Projects – ${person.name}`,
-  description: `Design and dev projects by ${person.name}`,
-  // Create new project pages by adding a new .mdx file to app/blog/posts
-  // All projects will be listed on the /home and /work routes
+  label: "Projects",
+  title: `Projects — ${person.name}`,
+  description: `Software engineering, telecommunications and networking projects by ${person.name}.`,
 };
 
 const gallery: Gallery = {
   path: "/gallery",
   label: "Gallery",
-  title: `Photo gallery – ${person.name}`,
-  description: `A photo collection by ${person.name}`,
-  // Images by https://lorant.one
-  // These are placeholder images, replace with your own
+  title: `Professional & Technical Gallery — ${person.name}`,
+  description: `Personal moments, events and activities from ${person.name}'s journey.`,
   images: [
     {
-      src: "/images/gallery/horizontal-1.jpg",
-      alt: "image",
+      src: "/images/gallery/gallerie1.jpeg",
+      alt: "Group photo at a technology and entrepreneurship event",
       orientation: "horizontal",
     },
     {
-      src: "/images/gallery/vertical-4.jpg",
-      alt: "image",
+      src: "/images/gallery/gallerie2.jpeg",
+      alt: "Students presenting a technical model together",
+      orientation: "horizontal",
+    },
+    {
+      src: "/images/gallery/gallerie3.jpeg",
+      alt: "Team presenting a project at an event",
+      orientation: "horizontal",
+    },
+    {
+      src: "/images/gallery/gallerie4.jpeg",
+      alt: "Group photo at the UGANC campus entrance",
       orientation: "vertical",
     },
     {
-      src: "/images/gallery/horizontal-3.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-1.jpg",
-      alt: "image",
+      src: "/images/gallery/gallerie5.jpeg",
+      alt: "Group photo with peers and a technical project model",
       orientation: "vertical",
     },
     {
-      src: "/images/gallery/vertical-2.jpg",
-      alt: "image",
+      src: "/images/gallery/gallerie6.jpeg",
+      alt: "Group photo at an event with a recognition award",
       orientation: "vertical",
     },
     {
-      src: "/images/gallery/horizontal-2.jpg",
-      alt: "image",
-      orientation: "horizontal",
+      src: "/images/gallery/gallerie7.jpeg",
+      alt: "Group photo during a campus visit",
+      orientation: "vertical",
     },
     {
-      src: "/images/gallery/horizontal-4.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-3.jpg",
-      alt: "image",
+      src: "/images/gallery/gallerie8.jpeg",
+      alt: "Personal outdoor portrait",
       orientation: "vertical",
     },
   ],

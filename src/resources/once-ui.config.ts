@@ -1,4 +1,4 @@
-import {
+import type {
   DataStyleConfig,
   DisplayConfig,
   EffectsConfig,
@@ -13,14 +13,13 @@ import {
 } from "@/types";
 import { home, person, social } from "./content";
 
-// IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://magic-portfolio-demo.vercel.app";
+const baseURL: string = "https://your-domain.example";
 
 const routes: RoutesConfig = {
   "/": true,
   "/about": true,
   "/work": true,
-  "/blog": true,
+  "/blog": false,
   "/gallery": true,
 };
 
@@ -30,13 +29,8 @@ const display: DisplayConfig = {
   themeSwitcher: true,
 };
 
-// Enable password protection on selected routes
-// Set password in the .env file, refer to .env.example
-const protectedRoutes: ProtectedRoutesConfig = {
-  "/work/automate-design-handovers-with-a-figma-to-code-pipeline": true,
-};
+const protectedRoutes: ProtectedRoutesConfig = {};
 
-// Import and set font for each variant
 import { Geist } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
 
@@ -65,30 +59,29 @@ const code = Geist_Mono({
 });
 
 const fonts: FontsConfig = {
-  heading: heading,
-  body: body,
-  label: label,
-  code: code,
+  heading,
+  body,
+  label,
+  code,
 };
 
-// default customization applied to the HTML in the main layout.tsx
 const style: StyleConfig = {
-  theme: "system", // dark | light | system
-  neutral: "gray", // sand | gray | slate | mint | rose | dusk | custom
-  brand: "cyan", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan | custom
-  accent: "red", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan | custom
-  solid: "contrast", // color | contrast
-  solidStyle: "flat", // flat | plastic
-  border: "playful", // rounded | playful | conservative | sharp
-  surface: "translucent", // filled | translucent
-  transition: "all", // all | micro | macro
-  scaling: "100", // 90 | 95 | 100 | 105 | 110
+  theme: "dark",
+  neutral: "gray",
+  brand: "indigo",
+  accent: "blue",
+  solid: "contrast",
+  solidStyle: "flat",
+  border: "conservative",
+  surface: "filled",
+  transition: "micro",
+  scaling: "100",
 };
 
 const dataStyle: DataStyleConfig = {
-  variant: "gradient", // flat | gradient | outline
-  mode: "categorical", // categorical | divergent | sequential
-  height: 24, // default chart height
+  variant: "gradient",
+  mode: "categorical",
+  height: 24,
   axis: {
     stroke: "var(--neutral-alpha-weak)",
   },
@@ -118,7 +111,7 @@ const effects: EffectsConfig = {
     colorEnd: "page-background",
   },
   dots: {
-    display: true,
+    display: false,
     opacity: 40,
     size: "2",
     color: "brand-background-strong",
@@ -140,9 +133,6 @@ const effects: EffectsConfig = {
   },
 };
 
-// Newsletter signups go straight into your Aveiro audience (https://www.aveiro.app),
-// where you can write and send the newsletter too. In Aveiro, open Audience → Embed,
-// create a form, add this site's domain to its allowed sites and paste the form's public ID here.
 const newsletterForm: NewsletterFormConfig = {
   aveiroEmbedId: "",
   effects: {
@@ -153,7 +143,7 @@ const newsletterForm: NewsletterFormConfig = {
       radius: 100,
     },
     gradient: {
-      display: true,
+      display: false,
       opacity: 90,
       x: 50,
       y: 0,
@@ -164,7 +154,7 @@ const newsletterForm: NewsletterFormConfig = {
       colorEnd: "static-transparent",
     },
     dots: {
-      display: true,
+      display: false,
       opacity: 20,
       size: "2",
       color: "brand-on-background-weak",
@@ -187,7 +177,6 @@ const newsletterForm: NewsletterFormConfig = {
   },
 };
 
-// default schema data — pulls from content.tsx so there's one source of truth
 const schema: SchemaConfig = {
   logo: "",
   type: "Person",
@@ -196,14 +185,12 @@ const schema: SchemaConfig = {
   email: person.email,
 };
 
-// social links — derived from the social array in content.tsx to avoid duplication
 const sameAs: SameAsConfig = {
-  threads: social.find((s) => s.name === "Threads")?.link ?? "",
-  linkedin: social.find((s) => s.name === "LinkedIn")?.link ?? "",
-  discord: social.find((s) => s.name === "Discord")?.link ?? "",
+  threads: social.find((item) => item.name === "Threads")?.link ?? "",
+  linkedin: social.find((item) => item.name === "LinkedIn")?.link ?? "",
+  discord: social.find((item) => item.name === "Discord")?.link ?? "",
 };
 
-// social sharing configuration for blog posts
 const socialSharing: SocialSharingConfig = {
   display: true,
   platforms: {

@@ -207,7 +207,7 @@ const components = {
 };
 
 type CustomMDXProps = MDXRemoteProps & {
-  components?: typeof components;
+  components?: MDXRemoteProps["components"];
 };
 
 export function CustomMDX(props: CustomMDXProps) {

@@ -1,16 +1,23 @@
 import { getPosts } from "@/utils/utils";
-import { baseURL, blog, person } from "@/resources";
+import { baseURL, blog, person, routes } from "@/resources";
 import { NextResponse } from "next/server";
 
 // Built once with the site, like the posts it lists.
 export const dynamic = "force-static";
 
 export async function GET() {
+  if (!routes["/blog"]) {
+    return new NextResponse("Not Found", { status: 404 });
+  }
+
   const posts = getPosts(["src", "app", "blog", "posts"]);
 
   // Sort posts by date (newest first)
   const sortedPosts = posts.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+    return (
+      new Date(b.metadata.publishedAt ?? 0).getTime() -
+      new Date(a.metadata.publishedAt ?? 0).getTime()
+    );
   });
 
   // Generate RSS XML
@@ -37,7 +44,7 @@ export async function GET() {
       <title>${post.metadata.title}</title>
       <link>${baseURL}/blog/${post.slug}</link>
       <guid>${baseURL}/blog/${post.slug}</guid>
-      <pubDate>${new Date(post.metadata.publishedAt).toUTCString()}</pubDate>
+      ${post.metadata.publishedAt ? `<pubDate>${new Date(post.metadata.publishedAt).toUTCString()}</pubDate>` : ""}
       <description><![CDATA[${post.metadata.summary}]]></description>
       ${post.metadata.image ? `<enclosure url="${baseURL}${post.metadata.image}" type="image/jpeg" />` : ""}
       ${post.metadata.tag ? `<category>${post.metadata.tag}</category>` : ""}

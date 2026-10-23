@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import {
   Avatar,
   Button,
@@ -15,6 +17,7 @@ import {
 import { baseURL, about, person, social } from "@/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
+import { getPublicAssetUrl } from "@/utils/getPublicAssetUrl";
 import React from "react";
 
 export async function generateMetadata() {
@@ -28,6 +31,9 @@ export async function generateMetadata() {
 }
 
 export default function About() {
+  const avatarAvailable = existsSync(path.join(process.cwd(), "public", person.avatar));
+  const avatarUrl = getPublicAssetUrl(person.avatar, baseURL);
+
   const structure = [
     {
       title: about.intro.title,
@@ -62,7 +68,7 @@ export default function About() {
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          ...(avatarUrl ? { image: avatarUrl } : {}),
         }}
       />
       {about.tableOfContent.display && (
@@ -93,15 +99,15 @@ export default function About() {
             flex={3}
             horizontal="center"
           >
-            <Avatar src={person.avatar} size="xl" aria-label={person.name} />
+            {avatarAvailable && <Avatar src={person.avatar} size="xl" aria-label={person.name} />}
             <Row gap="8" vertical="center">
               <Icon onBackground="accent-weak" name="globe" />
               {person.location}
             </Row>
             {person.languages && person.languages.length > 0 && (
               <Row wrap gap="8">
-                {person.languages.map((language, index) => (
-                  <Tag key={index} size="l">
+                {person.languages.map((language) => (
+                  <Tag key={language} size="l">
                     {language}
                   </Tag>
                 ))}
@@ -164,11 +170,11 @@ export default function About() {
                 fitWidth
                 data-border="rounded"
               >
-                {social
-                  .filter((item) => item.essential)
-                  .map(
-                    (item) =>
-                      item.link && (
+                    {social
+                      .filter((item) => item.essential)
+                      .map(
+                        (item) =>
+                          item.link.trim() && (
                         <React.Fragment key={item.name}>
                           <Row s={{ hide: true }}>
                             <Button
@@ -238,9 +244,9 @@ export default function About() {
                     </Column>
                     {experience.images && experience.images.length > 0 && (
                       <Row fillWidth paddingTop="m" paddingLeft="40" gap="12" wrap>
-                        {experience.images.map((image, index) => (
+                        {experience.images.map((image) => (
                           <Row
-                            key={index}
+                            key={image.src}
                             border="neutral-medium"
                             radius="m"
                             minWidth={image.width}
@@ -295,7 +301,7 @@ export default function About() {
               </Heading>
               <Column fillWidth gap="l">
                 {about.technical.skills.map((skill, index) => (
-                  <Column key={`${skill}-${index}`} fillWidth gap="4">
+                  <Column key={skill.title} fillWidth gap="4">
                     <Text id={skill.title} variant="heading-strong-l">
                       {skill.title}
                     </Text>
@@ -313,9 +319,9 @@ export default function About() {
                     )}
                     {skill.images && skill.images.length > 0 && (
                       <Row fillWidth paddingTop="m" gap="12" wrap>
-                        {skill.images.map((image, index) => (
+                        {skill.images.map((image) => (
                           <Row
-                            key={index}
+                            key={image.src}
                             border="neutral-medium"
                             radius="m"
                             minWidth={image.width}

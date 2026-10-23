@@ -33,7 +33,7 @@ export const Footer = () => {
         <Row gap="16">
           {social.map(
             (item) =>
-              item.link && (
+              item.link.trim() && (
                 <IconButton
                   key={item.name}
                   href={item.link}

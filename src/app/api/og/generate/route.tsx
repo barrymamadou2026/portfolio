@@ -1,11 +1,18 @@
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { ImageResponse } from "next/og";
-import { baseURL, person } from "@/resources";
+import { person } from "@/resources";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
-  let url = new URL(request.url);
-  let title = url.searchParams.get("title") || "Portfolio";
+  const url = new URL(request.url);
+  const title = url.searchParams.get("title") || "I build reliable software and explore the systems that make it scale.";
+  const avatarPath = path.join(process.cwd(), "public", person.avatar.replace(/^\/+/, ""));
+  const avatarAvailable = existsSync(avatarPath);
+  const avatarData = avatarAvailable
+    ? `data:image/jpeg;base64,${readFileSync(avatarPath).toString("base64")}`
+    : undefined;
 
   async function loadGoogleFont(font: string) {
     const url = `https://fonts.googleapis.com/css2?family=${font}`;
@@ -14,7 +21,7 @@ export async function GET(request: Request) {
 
     if (resource) {
       const response = await fetch(resource[1]);
-      if (response.status == 200) {
+      if (response.status === 200) {
         return await response.arrayBuffer();
       }
     }
@@ -29,7 +36,7 @@ export async function GET(request: Request) {
         width: "100%",
         height: "100%",
         padding: "6rem",
-        background: "#151515",
+        background: "#101522",
       }}
     >
       <div
@@ -37,7 +44,7 @@ export async function GET(request: Request) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: "4rem",
+          gap: "2.5rem",
           fontStyle: "normal",
           color: "white",
         }}
@@ -45,9 +52,8 @@ export async function GET(request: Request) {
         <span
           style={{
             padding: "1rem",
-            fontSize: "6rem",
-            lineHeight: "8rem",
-            letterSpacing: "-0.05em",
+            fontSize: "3.75rem",
+            lineHeight: "4.25rem",
             whiteSpace: "wrap",
             textWrap: "balance",
             overflow: "hidden",
@@ -59,29 +65,36 @@ export async function GET(request: Request) {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "5rem",
+            gap: "2.5rem",
+            width: "100%",
           }}
         >
-          <img
-            src={baseURL + person.avatar}
-            style={{
-              width: "12rem",
-              height: "12rem",
-              objectFit: "cover",
-              borderRadius: "100%",
-            }}
-          />
+          {avatarData && (
+            <img
+              src={avatarData}
+              style={{
+                width: "10rem",
+                height: "10rem",
+                flexShrink: 0,
+                objectFit: "cover",
+                borderRadius: "100%",
+              }}
+              alt={person.name}
+            />
+          )}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "0.75rem",
+              gap: "0.5rem",
+              flex: 1,
+              minWidth: 0,
             }}
           >
             <span
               style={{
-                fontSize: "4.5rem",
-                lineHeight: "4.5rem",
+                fontSize: "3.5rem",
+                lineHeight: "4rem",
                 whiteSpace: "pre-wrap",
                 textWrap: "balance",
               }}
@@ -90,14 +103,23 @@ export async function GET(request: Request) {
             </span>
             <span
               style={{
-                fontSize: "2.5rem",
-                lineHeight: "2.5rem",
+                fontSize: "1.5rem",
+                lineHeight: "2rem",
                 whiteSpace: "pre-wrap",
                 textWrap: "balance",
                 opacity: "0.6",
               }}
             >
               {person.role}
+            </span>
+            <span
+              style={{
+                fontSize: "1.25rem",
+                lineHeight: "1.75rem",
+                color: "#aebbd2",
+              }}
+            >
+              Software Engineering · Systems · Cloud
             </span>
           </div>
         </div>

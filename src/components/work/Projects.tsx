@@ -16,7 +16,16 @@ export function Projects({ range, exclude }: ProjectsProps) {
   }
 
   const sortedProjects = allProjects.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+    if (a.metadata.sortOrder !== undefined && b.metadata.sortOrder !== undefined) {
+      return a.metadata.sortOrder - b.metadata.sortOrder;
+    }
+    if (a.metadata.sortOrder !== undefined) return -1;
+    if (b.metadata.sortOrder !== undefined) return 1;
+
+    return (
+      new Date(b.metadata.publishedAt ?? 0).getTime() -
+      new Date(a.metadata.publishedAt ?? 0).getTime()
+    );
   });
 
   const displayedProjects = range
@@ -31,8 +40,12 @@ export function Projects({ range, exclude }: ProjectsProps) {
           key={post.slug}
           href={`/work/${post.slug}`}
           images={post.metadata.images}
+          imageAlts={post.metadata.imageAlts}
+          technologies={post.metadata.technologies}
           title={post.metadata.title}
-          description={post.metadata.summary}
+          description={post.metadata.subtitle
+            ? `${post.metadata.subtitle} — ${post.metadata.summary}`
+            : post.metadata.summary}
           hasContent={post.content.trim() !== ""}
           avatars={
             post.metadata.team?.map((member) => ({

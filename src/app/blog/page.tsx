@@ -1,7 +1,9 @@
+import { notFound } from "next/navigation";
 import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
 import { Newsletter } from "@/components";
 import { Posts } from "@/components/blog/Posts";
-import { baseURL, blog, person, newsletter } from "@/resources";
+import { baseURL, blog, person, newsletter, routes } from "@/resources";
+import { getPublicAssetUrl } from "@/utils/getPublicAssetUrl";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -14,6 +16,9 @@ export async function generateMetadata() {
 }
 
 export default function Blog() {
+  if (!routes["/blog"]) notFound();
+  const avatarUrl = getPublicAssetUrl(person.avatar, baseURL);
+
   return (
     <Column maxWidth="m" paddingTop="24">
       <Schema
@@ -26,7 +31,7 @@ export default function Blog() {
         author={{
           name: person.name,
           url: `${baseURL}/blog`,
-          image: `${baseURL}${person.avatar}`,
+          ...(avatarUrl ? { image: avatarUrl } : {}),
         }}
       />
       <Heading marginBottom="l" variant="heading-strong-xl" marginLeft="24">

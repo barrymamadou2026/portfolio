@@ -1,6 +1,7 @@
 import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
 import { baseURL, about, person, work } from "@/resources";
 import { Projects } from "@/components/work/Projects";
+import { getPublicAssetUrl } from "@/utils/getPublicAssetUrl";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -13,6 +14,8 @@ export async function generateMetadata() {
 }
 
 export default function Work() {
+  const avatarUrl = getPublicAssetUrl(person.avatar, baseURL);
+
   return (
     <Column maxWidth="m" paddingTop="24">
       <Schema
@@ -25,7 +28,7 @@ export default function Work() {
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          ...(avatarUrl ? { image: avatarUrl } : {}),
         }}
       />
       <Heading marginBottom="l" variant="heading-strong-xl" align="center">

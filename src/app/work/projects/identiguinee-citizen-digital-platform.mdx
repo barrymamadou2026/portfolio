@@ -1,0 +1,94 @@
+---
+title: "IdentiGuinée — Citizen Digital Platform"
+subtitle: "Additional Project · Hackathon Project"
+sortOrder: 5
+summary: "Hackathon project focused on digital identity, civil-registry automation and citizen services in Guinea."
+link: "https://portailidentguinee.vercel.app/"
+detailsAnchor: "#overview"
+mediaDirectory: "images/projects/project-01"
+videoPoster: "/images/projects/project-01/acceuil.png"
+technologies:
+  - React
+  - Vite
+  - Supabase
+  - PostgreSQL
+  - Vercel
+  - NaissanceChain
+  - Hackathon
+imageAlts:
+  - "IdentiGuinée citizen portal homepage"
+  - "IdentiGuinée identity platform feature diagram"
+team: []
+tag: "Additional Project"
+---
+
+## Overview
+
+IdentiGuinée is a digital identity and civil-registry prototype developed during the MIABE Hackathon 2026. The platform explores how citizen services, identity verification and administrative workflows could be digitized through a web portal connected to a simulated civil registry.
+
+## Context
+
+The team developed the project during a hackathon to explore a digital solution for identity and civil-status procedures in Guinea. The prototype addresses manual workflows, document verification challenges, limited process transparency and the need for a shared digital registry, without claiming deployment by a government administration.
+
+## My Contribution
+
+- Designed the **administration portal** used to monitor and manage platform operations.
+- Designed and structured the project's **Supabase/PostgreSQL database**.
+- Built and populated the simulated **NaissanceChain civil registry** used during the hackathon demonstration.
+- Implemented the **cross-verification workflow/API** used to compare citizen identity information against the simulated registry.
+- Contributed to the automated workflow connecting citizen requests, identity verification and certified-document generation.
+
+## Product
+
+The supplied portal image and demonstration show a citizen-facing portal, an administration interface, a simulated digital registry, automated identity verification and certified-document workflows. NaissanceChain is a simulation/prototype developed for the hackathon, not a national blockchain service in production.
+
+## Technical Architecture
+
+- **Frontend:** React 18, Vite 5 and React Router for the citizen and administration interfaces.
+- **Data layer:** Supabase backed by PostgreSQL.
+- **Registry prototype:** NaissanceChain simulated civil registry hosted in the hackathon environment.
+- **Verification:** An API/workflow compares submitted citizen identity information with the simulated registry.
+- **Deployment:** Vercel.
+
+Simplified flow:
+
+`Citizen/Admin interfaces → React 18 / Vite 5 → Supabase / PostgreSQL → simulated NaissanceChain registry → verification workflow/API → certified documents and verification`
+
+## Data Layer
+
+I contributed to the shared Supabase/PostgreSQL data model used by the project modules. The simulated registry represented fields such as a unique birth-record identifier, names, birth date and place, parent information, a simulated chain hash, a transaction identifier, registration date and record status. This case study does not publish personal record values or credentials.
+
+## Identity Verification Workflow
+
+1. A citizen submits identity information through the web portal.
+2. The platform sends the data to the verification module.
+3. The module queries the simulated NaissanceChain registry hosted on Supabase.
+4. Citizen information is compared with the registry.
+5. The system returns a verification status and related metadata.
+6. Verified information can then be used by the document-generation workflow.
+
+This describes a hackathon prototype and does not imply that the workflow is in use by a real administration.
+
+## Administration Portal
+
+I designed the administration portal for monitoring and managing platform operations, including citizen requests, users, verification processes, system activity and administrative workflows represented in the project.
+
+## Demo
+
+The supplied demonstration video and project images are shown below. No autoplay is used.
+
+<ProjectDemoMedia />
+
+## What I Learned
+
+- Teamwork
+- Rapid prototyping
+- Product thinking
+- Working under hackathon constraints
+- Presenting a technical solution
+- Designing a shared data model for multiple application modules.
+- Building verification workflows around a cloud database.
+- Integrating frontend applications with Supabase.
+- Working with simulated registry and blockchain concepts in a prototype environment.
+- Coordinating technical work within a multidisciplinary team.
+- Presenting a working technical concept through a live demonstration.

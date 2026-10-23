@@ -25,7 +25,10 @@ export function Posts({
   }
 
   const sortedBlogs = allBlogs.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+    return (
+      new Date(b.metadata.publishedAt ?? 0).getTime() -
+      new Date(a.metadata.publishedAt ?? 0).getTime()
+    );
   });
 
   const displayedBlogs = range

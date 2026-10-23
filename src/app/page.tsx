@@ -1,20 +1,19 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import {
   Heading,
   Text,
   Button,
-  Avatar,
   RevealFx,
   Column,
-  Badge,
   Row,
   Schema,
   Meta,
-  Line,
+  Tag,
 } from "@once-ui-system/core";
-import { home, about, person, baseURL, routes } from "@/resources";
-import { Newsletter } from "@/components";
+import { home, about, person, baseURL, work } from "@/resources";
 import { Projects } from "@/components/work/Projects";
-import { Posts } from "@/components/blog/Posts";
+import { getPublicAssetUrl } from "@/utils/getPublicAssetUrl";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -27,6 +26,9 @@ export async function generateMetadata() {
 }
 
 export default function Home() {
+  const cvAvailable = existsSync(path.join(process.cwd(), "public", "Mamadou_Barry_CV.pdf"));
+  const avatarUrl = getPublicAssetUrl(person.avatar, baseURL);
+
   return (
     <Column maxWidth="m" gap="xl" paddingY="12" horizontal="center">
       <Schema
@@ -35,36 +37,15 @@ export default function Home() {
         path={home.path}
         title={home.title}
         description={home.description}
-        image={`/api/og/generate?title=${encodeURIComponent(home.title)}`}
+        image={home.image}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          ...(avatarUrl ? { image: avatarUrl } : {}),
         }}
       />
       <Column fillWidth horizontal="center" gap="m">
         <Column maxWidth="s" horizontal="center" align="center">
-          {home.featured.display && (
-            <RevealFx
-              fillWidth
-              horizontal="center"
-              paddingTop="16"
-              paddingBottom="32"
-              paddingLeft="12"
-            >
-              <Badge
-                background="brand-alpha-weak"
-                paddingX="12"
-                paddingY="4"
-                onBackground="neutral-strong"
-                textVariant="label-default-s"
-                arrow={false}
-                href={home.featured.href}
-              >
-                <Row paddingY="2">{home.featured.title}</Row>
-              </Badge>
-            </RevealFx>
-          )}
           <RevealFx translateY="4" fillWidth horizontal="center" paddingBottom="16">
             <Heading wrap="balance" variant="display-strong-l">
               {home.headline}
@@ -75,67 +56,40 @@ export default function Home() {
               {home.subline}
             </Text>
           </RevealFx>
-          <RevealFx paddingTop="12" delay={400} horizontal="center" paddingLeft="12">
-            <Button
-              id="about"
-              data-border="rounded"
-              href={about.path}
-              variant="secondary"
-              size="m"
-              weight="default"
-              arrowIcon
-            >
-              <Row gap="8" vertical="center" paddingRight="4">
-                {about.avatar.display && (
-                  <Avatar
-                    marginRight="8"
-                    style={{ marginLeft: "-0.75rem" }}
-                    src={person.avatar}
-                    size="m"
-                    aria-hidden
-                  />
-                )}
-                {about.title}
-              </Row>
-            </Button>
+          <RevealFx paddingTop="12" delay={400} horizontal="center">
+            <Row gap="8" wrap horizontal="center">
+              <Button href={work.path} variant="secondary" size="m" arrowIcon>
+                View my projects
+              </Button>
+              {cvAvailable && (
+                <Button
+                  href="/Mamadou_Barry_CV.pdf"
+                  variant="secondary"
+                  size="m"
+                  prefixIcon="document"
+                >
+                  Download CV
+                </Button>
+              )}
+              <Button href={about.path} variant="secondary" size="m">
+                About me
+              </Button>
+            </Row>
           </RevealFx>
         </Column>
       </Column>
+      <Row fillWidth wrap gap="8" horizontal="center" aria-label="Core technologies">
+        {["Java", "Spring Boot", "NestJS", "Next.js", "PostgreSQL", "Cloud", "Networking"].map(
+          (technology) => (
+            <Tag key={technology} size="m">
+              {technology}
+            </Tag>
+          ),
+        )}
+      </Row>
       <RevealFx translateY="16" delay={600}>
-        <Projects range={[1, 1]} />
+        <Projects range={[1, 3]} />
       </RevealFx>
-      {routes["/blog"] && (
-        <Column fillWidth gap="24" marginBottom="l">
-          <Row fillWidth paddingRight="64">
-            <Line maxWidth={48} />
-          </Row>
-          <Row
-            fillWidth
-            gap="24"
-            marginTop="40"
-            s={{ direction: "column", marginTop: "16", gap: "8" }}
-          >
-            <Row
-              flex={1}
-              paddingLeft="l"
-              paddingTop="24"
-              s={{ paddingLeft: "16", paddingTop: "8" }}
-            >
-              <Heading as="h2" variant="display-strong-xs" wrap="balance">
-                Latest from the blog
-              </Heading>
-            </Row>
-            <Row flex={3} paddingX="20" s={{ paddingX: "0" }}>
-              <Posts range={[1, 2]} columns="2" />
-            </Row>
-          </Row>
-          <Row fillWidth paddingLeft="64" horizontal="end">
-            <Line maxWidth={48} />
-          </Row>
-        </Column>
-      )}
-      <Projects range={[2]} />
-      <Newsletter />
     </Column>
   );
 }
