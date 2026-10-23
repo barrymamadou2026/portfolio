@@ -1,6 +1,11 @@
 {
-  "name": "@once-ui-system/magic-portfolio",
-  "version": "2.3.0",
+  "name": "portfolio-barry-mamadou",
+  "version": "1.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barrymamadou2026/portfolio.git"
+  },
   "scripts": {
     "dev": "next dev",
     "export": "next export",
