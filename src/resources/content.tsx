@@ -4,7 +4,7 @@ const person: Person = {
   firstName: "Mamadou",
   lastName: "Barry",
   name: "Mamadou Barry",
-  role: "Software Developer | Software Engineering, Systems & Cloud",
+  role: "Software Developer | Systems & Cloud",
   avatar: "/images/profile/mamadou-barry.jpg",
   email: "mb624064783@gmail.com",
   location: "Conakry, Guinea",
