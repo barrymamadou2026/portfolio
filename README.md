@@ -5,7 +5,7 @@ Personal portfolio of **Mamadou Barry**, Software Developer and NTIC graduate in
 🌐 **Live Portfolio:**  
 https://portfolio-barry-mamadou.vercel.app/
 
-![Portfolio Preview](public/images/og/home.jpg)
+![Portfolio Preview](public/images/og/portfolio-preview.jpg)
 
 ---
 
